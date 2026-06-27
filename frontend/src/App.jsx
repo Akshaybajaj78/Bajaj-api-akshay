@@ -28,8 +28,9 @@ function App() {
           .filter(line => line.length > 0)
           .map(line => line.replace(/["',]/g, '').trim()); // Strip quotes and commas if user copy pasted poorly
       }
+      const API_URL = "https://bajaj-api-akshay.onrender.com";
 
-      const response = await axios.post(`/bfhl`, {
+      const response = await axios.post(`${API_URL}/bfhl`, {
         data: Array.isArray(parsedData) ? parsedData : [parsedData]
       });
 
