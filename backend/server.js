@@ -1,11 +1,14 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { processHierarchies } = require('./utils/graphProcessor');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve the React static files after build
+app.use(express.static(path.join(__dirname, '../frontend/dist')));
 app.post('/bfhl', (req, res) => {
     try {
         const { data } = req.body;
@@ -30,6 +33,11 @@ app.post('/bfhl', (req, res) => {
         console.error("Error processing request:", error);
         return res.status(500).json({ error: "Internal server error" });
     }
+});
+
+// Catch all unmatched routes and return the React index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
