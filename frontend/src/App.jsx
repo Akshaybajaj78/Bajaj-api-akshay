@@ -29,7 +29,8 @@ function App() {
           .map(line => line.replace(/["',]/g, '').trim()); // Strip quotes and commas if user copy pasted poorly
       }
 
-      const response = await axios.post('http://localhost:3000/bfhl', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const response = await axios.post(`${apiUrl}/bfhl`, {
         data: Array.isArray(parsedData) ? parsedData : [parsedData]
       });
 
