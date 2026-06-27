@@ -1,6 +1,9 @@
 # Stage 1: Build the React frontend
-FROM node:18-alpine AS build
+FROM node:20 AS build
 WORKDIR /app/frontend
+
+# Prevent out of memory errors during Vite build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 
 # Install frontend dependencies
 COPY frontend/package.json frontend/package-lock.json* ./
