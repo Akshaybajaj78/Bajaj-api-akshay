@@ -36,7 +36,7 @@ app.post('/bfhl', (req, res) => {
 });
 
 // Catch all unmatched routes and return the React index.html
-app.get('*', (req, res) => {
+app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
 });
 
